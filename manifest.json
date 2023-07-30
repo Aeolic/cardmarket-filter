@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cardmarket Format Filter",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Filter singles from sellers by format on Cardmarket.",
   "icons": {
     "16": "images/logo-16.png",

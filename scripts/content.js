@@ -48,6 +48,12 @@ function restoreOptions() {
                 }
 
                 let cardInfo = await fetch(`https://api.scryfall.com/cards/named?exact=${cardName}`)
+
+                if(cardInfo.status!==200){
+                    console.log("Did not find card on scryfall, skipping format check.")
+                    continue
+                }
+
                 await new Promise(r => setTimeout(r, 55));
                 let jsonInfo = await cardInfo.json();
 

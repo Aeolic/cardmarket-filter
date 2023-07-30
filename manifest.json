@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Cardmarket Filter",
   "version": "1.0",
-  "description": "Filter non Modern Legal Cards on cardmarket",
+  "description": "Filter by format on Cardmarket.",
   "icons": {
     "16": "images/logo-16.png",
     "32": "images/logo-32.png",

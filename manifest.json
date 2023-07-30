@@ -22,9 +22,8 @@
         "scripts/content.js"
       ],
       "matches": [
-        "https://cardmarket.com/*",
-        "https://www.cardmarket.com/*",
-        "https://cardmarket.com/*/Singles/*"
+        "https://www.cardmarket.com/*/Offers/Singles*",
+        "https://cardmarket.com/*/Offers/Singles*"
       ]
     }
   ]

@@ -13,23 +13,21 @@ function restoreOptions() {
 }
 
 (async function main() {
-    console.log("Triggering extension!");
-    //TODO disable klicks/grey out/ show loading until all elements are removed
-
-    //let format = "modern";
+    console.log("Triggering Cardmarket extension!");
+    //TODO disable clicks/grey out/ show loading until all elements are removed?
 
     restoreOptions();
 
     const offersTable = document.getElementById("UserOffersTable");
 
     if (offersTable) {
-        console.log("Got Table!")
-        // alert("Found table!")
 
         const tableBody = offersTable.querySelector(".table-body");
 
         if (tableBody) {
-            console.log("Got table Body!", tableBody);
+
+            let notLegalCardmarketNames = new Set();
+
             for (let entry of tableBody.children) {
 
                 const seller = entry.querySelector(".col-seller");
@@ -42,20 +40,22 @@ function restoreOptions() {
                     cardName = cardName.trim();
                 }
 
-                console.log("Cardname:", cardName);
+                //if there are multiple cards with different versions, we don't need to check
+                //do this after (V. checks to handle different versions with the same edition + different editions
+                if (notLegalCardmarketNames.has(cardName)) {
+                    entry.style.display = "none";
+                    continue;
+                }
 
                 let cardInfo = await fetch(`https://api.scryfall.com/cards/named?exact=${cardName}`)
                 await new Promise(r => setTimeout(r, 55));
                 let jsonInfo = await cardInfo.json();
-                console.log("Got response:", jsonInfo)
 
-                //TODO list in extension settings
                 if (jsonInfo.legalities[format] === "not_legal") {
-                    console.log(cardName + "is not modern legal, hiding!")
+                    console.log(cardName + "is not legal, hiding!")
                     entry.style.display = "none";
-                    //TODO add to already checked -> reduces amount of requests to scryfall
+                    notLegalCardmarketNames.add(cardName);
                 }
-
             }
         }
     }

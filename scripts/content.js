@@ -1,11 +1,24 @@
 //Filter Icon https://www.flaticon.com/de/autoren/freepik
 
+let format = "modern";
 
+function restoreOptions() {
+    chrome.storage.sync.get(
+        {filterFormat: 'modern'},
+        (items) => {
+            format = items.filterFormat;
+            console.log("Got:", format)
+        }
+    );
+}
 
 (async function main() {
     console.log("Triggering extension!");
+    //TODO disable klicks/grey out/ show loading until all elements are removed
 
-    const article = document.querySelector('article');
+    //let format = "modern";
+
+    restoreOptions();
 
     const offersTable = document.getElementById("UserOffersTable");
 
@@ -22,10 +35,10 @@
                 const seller = entry.querySelector(".col-seller");
                 const sellerA = seller.querySelector("a");
 
-                let cardName =  sellerA.text
+                let cardName = sellerA.text
 
-                if(cardName.includes("(V.")){
-                    cardName = cardName.slice(0, cardName.indexOf(("V."))-1);
+                if (cardName.includes("(V.")) {
+                    cardName = cardName.slice(0, cardName.indexOf(("V.")) - 1);
                     cardName = cardName.trim();
                 }
 
@@ -37,9 +50,10 @@
                 console.log("Got response:", jsonInfo)
 
                 //TODO list in extension settings
-                if(jsonInfo.legalities.modern === "not_legal"){
+                if (jsonInfo.legalities[format] === "not_legal") {
                     console.log(cardName + "is not modern legal, hiding!")
                     entry.style.display = "none";
+                    //TODO add to already checked -> reduces amount of requests to scryfall
                 }
 
             }

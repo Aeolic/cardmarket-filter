@@ -18,6 +18,11 @@ function restoreOptions() {
 
     restoreOptions();
 
+    if (format === 'all'){
+        console.log("No Filter will be applied!")
+        return;
+    }
+
     const offersTable = document.getElementById("UserOffersTable");
 
     if (offersTable) {
